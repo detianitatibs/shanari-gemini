@@ -18,7 +18,7 @@
   1. 指定されたID/slugで公開中の記事のメタデータをDBから検索。
   2. 記事が見つからない場合は404エラーを返す。
   3. メタデータ内の`file_path`を元に、Cloud StorageからMarkdownファイルを取得。
-  4. Markdown形式の本文をHTMLに変換。
+  4. Markdown形式の本文をHTMLに変換。その際、XSS攻撃を防ぐためにサニタイズ処理を行うが、YouTube埋め込みのために`<iframe>`タグは許可する。
 - **Output:** 記事データ（HTML変換後の本文を含む）。
 
 ### 1.2. 管理者機能

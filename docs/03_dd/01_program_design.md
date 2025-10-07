@@ -222,3 +222,71 @@ function handleImageUpload(request):
   imageUrl = getGCSFileUrl(filePath)
   return 200 OK with { url: imageUrl }
 ```
+
+## 4. Markdownレンダリング仕様
+
+### 4.1. 使用ライブラリ
+
+- **Markdown変換:** `react-markdown`
+- **HTML要素の許可:** `rehype-raw` (`react-markdown`のプラグイン)
+- **シンタックスハイライト:** `react-syntax-highlighter`
+
+### 4.2. 実装方針
+
+ブログ詳細ページおよび管理者ページのプレビューでは、`react-markdown`コンポーネントを用いてMarkdown文字列をReactコンポーネントに変換する。
+YouTubeの埋め込み`<iframe>`を許可するため、`rehype-raw`プラグインを導入する。
+
+#### 4.2.1. コンポーネント実装例
+
+`components/organisms/MarkdownRenderer.tsx` (新規作成)
+
+```typescript
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+
+interface MarkdownRendererProps {
+  content: string;
+}
+
+const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
+  return (
+    <ReactMarkdown
+      rehypePlugins={[rehypeRaw]} // iframeなどのHTMLタグを許可
+      components={{
+        code({ node, inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(className || '');
+          return !inline && match ? (
+            <SyntaxHighlighter
+              style={vscDarkPlus}
+              language={match[1]}
+              PreTag="div"
+              {...props}
+            >
+              {String(children).replace(/\n$/, '')}
+            </SyntaxHighlighter>
+          ) : (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        },
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+};
+
+export default MarkdownRenderer;
+```
+
+#### 4.2.2. `rehype-raw` の設定
+
+`rehype-raw`はデフォルトで危険な可能性のあるコンテンツ（例: `<script>`タグ）をサニタイズする。
+`<iframe>`タグは、YouTubeなどの信頼できるソースからの埋め込みを許可するために、デフォルトで有効な要素として扱われる。特別な設定は不要。
+これにより、セキュリティを確保しつつ、要件である動画埋め込み機能を実現する。
+
+```
