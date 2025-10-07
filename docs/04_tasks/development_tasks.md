@@ -14,7 +14,7 @@
 
 | チェックマーク | ID/連番 | タスク名 | 対象設計書（セクション） | カテゴリ | 所要時間（見積） | 完了条件 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [ ] | ENV-001 | Next.jsプロジェクトのセットアップとDocker開発環境の構築 | `infra-dd > 1.2, 3.2` | 環境準備 | 8時間 | `docker-compose up`でNext.jsの雛形ページが`localhost:3000`で表示される。 |
+| [x] | ENV-001 | Next.jsプロジェクトのセットアップとDocker開発環境の構築 | `infra-dd > 1.2, 3.2` | 環境準備 | 8時間 | `docker-compose up`でNext.jsの雛形ページが`localhost:3000`で表示される。 |
 | [ ] | CICD-001 | GitHub ActionsによるCIパイプラインの構築 | `infra-dd > 4.1` | CICD | 4時間 | Pull Request時にESLintとJest（初期状態）が実行され、結果がレポートされる。 |
 | [ ] | CICD-002 | GitHub ActionsによるCDパイプラインの構築（ビルド＆プッシュ） | `infra-dd > 4.2` | CICD | 8時間 | mainブランチへのマージ時にDockerイメージがビルドされ、Artifact Registryにプッシュされる。 |
 
