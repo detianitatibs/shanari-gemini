@@ -6,55 +6,56 @@
 
 ```
 /
-├── app/
-│   ├── (admin)/
-│   │   ├── admin/
-│   │   │   ├── dashboard/
-│   │   │   │   └── page.tsx      # 管理者ダッシュボード
+├── apps/
+│   ├── app/
+│   │   ├── (admin)/
+│   │   │   ├── admin/
+│   │   │   │   ├── dashboard/
+│   │   │   │   │   └── page.tsx      # 管理者ダッシュボード
+│   │   │   │   ├── posts/
+│   │   │   │   │   ├── page.tsx      # 記事一覧
+│   │   │   │   │   ├── new/
+│   │   │   │   │   │   └── page.tsx  # 記事新規作成
+│   │   │   │   │   └── [id]/
+│   │   │   │   │       └── edit/
+│   │   │   │   │           └── page.tsx # 記事編集
+│   │   │   │   └── layout.tsx          # 管理画面共通レイアウト
+│   │   │   └── login/
+│   │   │       └── page.tsx          # ログイン画面
+│   │   ├── (main)/
+│   │   │   ├── blog/
+│   │   │   │   ├── page.tsx          # ブログ一覧
+│   │   │   │   └── [slug]/
+│   │   │   │       └── page.tsx      # ブログ詳細
+│   │   │   ├── profile/
+│   │   │   │   └── page.tsx          # プロフィール
+│   │   │   └── layout.tsx            # 一般画面共通レイアウト
+│   │   ├── api/
+│   │   │   ├── admin/
+│   │   │   │   ├── posts/
+│   │   │   │   │   ├── route.ts      # [POST] 記事作成
+│   │   │   │   │   └── [id]/
+│   │   │   │   │       └── route.ts  # [PUT, DELETE] 記事更新/削除
+│   │   │   │   └── image-upload/
+│   │   │   │       └── route.ts      # [POST] 画像アップロード
 │   │   │   ├── posts/
-│   │   │   │   ├── page.tsx      # 記事一覧
-│   │   │   │   ├── new/
-│   │   │   │   │   └── page.tsx  # 記事新規作成
-│   │   │   │   └── [id]/
-│   │   │   │       └── edit/
-│   │   │   │           └── page.tsx # 記事編集
-│   │   │   └── layout.tsx          # 管理画面共通レイアウト
-│   │   └── login/
-│   │       └── page.tsx          # ログイン画面
-│   ├── (main)/
-│   │   ├── blog/
-│   │   │   ├── page.tsx          # ブログ一覧
-│   │   │   └── [slug]/
-│   │   │       └── page.tsx      # ブログ詳細
-│   │   ├── profile/
-│   │   │   └── page.tsx          # プロフィール
-│   │   └── layout.tsx            # 一般画面共通レイアウト
-│   ├── api/
-│   │   ├── admin/
-│   │   │   ├── posts/
-│   │   │   │   ├── route.ts      # [POST] 記事作成
-│   │   │   │   └── [id]/
-│   │   │   │       └── route.ts  # [PUT, DELETE] 記事更新/削除
-│   │   │   └── image-upload/
-│   │   │       └── route.ts      # [POST] 画像アップロード
-│   │   ├── posts/
-│   │   │   ├── route.ts          # [GET] 記事一覧取得
-│   │   │   └── [slug]/
-│   │   │       └── route.ts      # [GET] 記事詳細取得
-│   │   ├── categories/
-│   │   │   └── route.ts          # [GET] カテゴリ一覧取得
-│   │   └── archives/
-│   │       └── route.ts          # [GET] アーカイブ一覧取得
-│   ├── components/
-│   │   ├── atoms/                # Button, Inputなど
-│   │   ├── molecules/            # PostCard, SearchFormなど
-│   │   └── organisms/            # Header, Sidebarなど
-│   ├── lib/
-│   │   ├── db/                   # TypeORMのコネクション、Entity定義
-│   │   ├── gcs/                  # Google Cloud Storage関連処理
-│   │   └── auth/                 # 認証関連処理
-│   ├── middleware.ts             # 認証チェックなど
-│   └── page.tsx                  # トップページ
+│   │   │   │   ├── route.ts          # [GET] 記事一覧取得
+│   │   │   │   └── [slug]/
+│   │   │   │       └── route.ts      # [GET] 記事詳細取得
+│   │   │   ├── categories/
+│   │   │   │   └── route.ts          # [GET] カテゴリ一覧取得
+│   │   │   └── archives/
+│   │   │       └── route.ts          # [GET] アーカイブ一覧取得
+│   │   ├── components/
+│   │   │   ├── atoms/                # Button, Inputなど
+│   │   │   ├── molecules/            # PostCard, SearchFormなど
+│   │   │   └── organisms/            # Header, Sidebarなど
+│   │   ├── lib/
+│   │   │   ├── db/                   # TypeORMのコネクション、Entity定義
+│   │   │   ├── gcs/                  # Google Cloud Storage関連処理
+│   │   │   └── auth/                 # 認証関連処理
+│   │   ├── middleware.ts             # 認証チェックなど
+│   │   └── page.tsx                  # トップページ
 └── ...
 ```
 
