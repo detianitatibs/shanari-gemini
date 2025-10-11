@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "next": "15.5.4",
@@ -29,8 +29,5 @@
     "jest-junit": "^16.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
-  },
-  "overrides": {
-    "glob": "^10.4.5"
   }
 }
