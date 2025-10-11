@@ -34,5 +34,7 @@ jobs:
       - name: Build and push container image
         working-directory: ./apps/web
         run: |
-          docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app:latest .
-          docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app:latest
+          IMAGE_ID=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app
+          docker build -t $IMAGE_ID:${{ github.sha }} -t $IMAGE_ID:latest .
+          docker push $IMAGE_ID:${{ github.sha }}
+          docker push $IMAGE_ID:latest
