@@ -45,3 +45,7 @@ jobs:
           name: Jest Tests
           path: apps/web/reports/jest-junit.xml
           reporter: jest-junit
+
+      - name: Docker build check
+        working-directory: ./apps/web
+        run: docker build -f Dockerfile -t shanari-gemini-ci-build-check .
