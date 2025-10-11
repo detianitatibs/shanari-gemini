@@ -22,16 +22,44 @@
 
 `apps`ディレクトリ内のソースファイルを変更すると、アプリケーションは自動的にリロードされます。
 
-## CI/CD
+## CI/CD パイプライン
 
-このプロジェクトでは、GitHub Actionsを使用したCI（継続的インテグレーション）パイプラインが設定されています。
+このプロジェクトでは、GitHub Actionsを使用してCI/CDパイプラインを分離・実行しています。
 
-- **トリガー:** `main`ブランチへの`push`、または任意のブランチへの`pull_request`
+### CI (継続的インテグレーション)
+
+- **目的:** `main`ブランチにマージされる前のコード品質を保証します。
+- **トリガー:** `main`ブランチをターゲットとした`pull_request`作成・更新時。実行は`apps/web/`配下、または関連するワークフローファイルに変更があった場合に限定されます。
 - **実行内容:**
     - ESLintによるコード静的解析 (`npm run lint`)
     - Jestによる単体テスト (`npm run test`)
 
-Pull Requestを作成すると、これらのチェックが自動的に実行され、コードの品質を担保します。
+### CD (継続的デリバリー)
+
+- **目的:** `main`ブランチの最新のコードをコンテナイメージとしてビルドし、Google Artifact Registryに登録します。
+- **トリガー:** `main`ブランチへの`push`時（Pull Requestのマージなど）。実行は`apps/web/`配下、または関連するワークフローファイルに変更があった場合に限定されます。
+
+#### CDパイプラインの設定
+
+CDパイプラインを有効にするには、事前にGitHubリポジトリに以下のシークレットを設定する必要があります。
+
+##### 設定手順
+
+1.  対象のGitHubリポジトリで、`Settings` > `Secrets and variables` > `Actions` に移動します。
+2.  `New repository secret`ボタンを押し、以下のシークレットを一つずつ登録します。
+
+##### 必要なシークレット
+
+| シークレット名                      | 説明                                                                                                                                                           | 設定例                                                                              |
+| :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------- |
+| `GCP_PROJECT_ID`                    | Google CloudプロジェクトのID。                                                                                                                                 | `my-gcp-project-12345`                                                              |
+| `GCP_REGION`                        | リソースをデプロイするGCPリージョン。                                                                                                                          | `asia-northeast1`                                                                   |
+| `GCP_SERVICE_ACCOUNT`               | GitHub ActionsからGCPへの認証に使用するサービスアカウントのメールアドレス。このサービスアカウントには`Artifact Registry Writer`のロールが必要です。 | `github-actions-runner@my-gcp-project-12345.iam.gserviceaccount.com`                |
+| `GCP_WORKLOAD_IDENTITY_PROVIDER`    | GCPのWorkload Identity連携で設定したプロバイダー名。                                                                                                           | `projects/1234567890/locations/global/workloadIdentityPools/my-pool/providers/my-provider` |
+| `GCS_BUCKET_NAME`                   | (デプロイ時に使用) アプリケーションが使用するGoogle Cloud Storageのバケット名。                                                                                | `my-app-storage-bucket`                                                             |
+| `ADMIN_EMAIL_LIST`                  | (デプロイ時に使用) アプリケーションの管理者として許可するGoogleアカウントのメールアドレス（カンマ区切り）。                                                      | `admin1@example.com,admin2@example.com`                                             |
+
+これらのシークレットを設定することで、GitHub Actionsは安全にGCPへ認証し、コンテナイメージのプッシュやデプロイを実行できるようになります。
 
 ## 既知の問題 (Known Issues)
 

@@ -144,10 +144,12 @@ GitHub Actionsを使用してCI/CDパイプラインを構築する。
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-  pull_request:
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/ci.yml'
 
 jobs:
   build-and-test:
@@ -183,9 +185,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'apps/web/**'
+      - '.github/workflows/cd.yml'
 
 jobs:
-  deploy:
+  build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -208,25 +213,17 @@ jobs:
         run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
       - name: Build and push container image
+        working-directory: ./apps/web
         run: |
           docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app:latest .
           docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app:latest
-
-      - name: Deploy to Cloud Run
-        run: |
-          gcloud run deploy shanari-gemini-app \
-            --image=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app:latest \
-            --region=${{ secrets.GCP_REGION }} \
-            --platform=managed \
-            --allow-unauthenticated \
-            --set-env-vars="GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}" \
-            --set-env-vars="ADMIN_EMAIL_LIST=${{ secrets.ADMIN_EMAIL_LIST }}"
+```
 
 **必要なGitHub Secrets:**
 - `GCP_PROJECT_ID`: Google CloudプロジェクトID
 - `GCP_REGION`: Cloud Runをデプロイするリージョン (例: `asia-northeast1`)
 - `GCP_WORKLOAD_IDENTITY_PROVIDER`: Workload Identity連携用のプロバイダー名
-- `GCP_SERVICE_ACCOUNT`: デプロイ権限を持つサービスアカウントのメールアドレス
+- `GCP_SERVICE_ACCOUNT`: GitHub ActionsからGCPへの認証に使用するサービスアカウントのメールアドレス。このサービスアカウントには`Artifact Registry Writer`のロールが必要です。
 - `GCS_BUCKET_NAME`: SQLiteファイルや画像を保存するGCSバケット名
 - `ADMIN_EMAIL_LIST`: 管理者として許可するGoogleアカウントのメールアドレスリスト
 
