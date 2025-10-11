@@ -2,7 +2,7 @@ services:
   web:
     build:
       context: ./apps/web
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
       - ./apps/web:/usr/src/app
       - /usr/src/app/node_modules
