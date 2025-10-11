@@ -32,3 +32,18 @@
     - Jestによる単体テスト (`npm run test`)
 
 Pull Requestを作成すると、これらのチェックが自動的に実行され、コードの品質を担保します。
+
+## 既知の問題 (Known Issues)
+
+### `npm install`時の警告
+
+開発環境のセットアップ (`npm install`) やCIの実行時に、以下の様な古いパッケージに関する警告が表示されることがあります。
+
+```
+npm warn deprecated inflight@1.0.6: This module is not supported...
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+```
+
+これは、テストツール(`Jest`)の依存関係の奥深くで、古いバージョンのパッケージが利用されているために発生します。
+
+これらの警告を強制的に解消しようとすると、テストのコードカバレッジ機能が動作しなくなるという副作用が発生するため、現状では警告を許容しています。アプリケーションの動作やセキュリティに直接的な影響はありません。
