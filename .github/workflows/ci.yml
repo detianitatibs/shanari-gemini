@@ -29,5 +29,14 @@ jobs:
         run: npm run lint
 
       - name: Run tests
+        id: tests
         working-directory: apps/web
         run: npm run test
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Jest Tests
+          path: apps/web/reports/jest-junit.xml
+          reporter: jest-junit
