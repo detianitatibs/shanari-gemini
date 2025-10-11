@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest --coverage"
+    "test": "jest"
   },
   "dependencies": {
     "next": "15.5.4",
