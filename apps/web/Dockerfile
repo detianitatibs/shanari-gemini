@@ -18,6 +18,7 @@ WORKDIR /usr/src/app
 
 # Install gcsfuse for Cloud Storage access, as per design documents
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     gnupg \
     lsb-release \
     curl && \

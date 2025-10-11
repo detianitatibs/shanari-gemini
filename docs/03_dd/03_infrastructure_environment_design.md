@@ -9,13 +9,16 @@ Cloud Runコンテナ内でCloud Storage FUSEを利用し、SQLiteデータベ�
 #### `Dockerfile` (抜粋)
 
 ```Dockerfile
-# Google Cloud SDK for gcsfuse
+# Install gcsfuse and necessary certificates
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     gnupg \
-    lsb-release && \
+    lsb-release \
+    curl && \
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg add - && \
-    apt-get update && apt-get install -y gcsfuse
+    apt-get update && apt-get install -y gcsfuse && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # ... (中略)
 
