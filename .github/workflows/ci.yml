@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Run linter
+        working-directory: apps/web
+        run: npm run lint
+
+      - name: Run tests
+        id: tests
+        working-directory: apps/web
+        run: npm run test
+
+      - name: Report test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Jest Tests
+          path: apps/web/reports/jest-junit.xml
+          reporter: jest-junit
