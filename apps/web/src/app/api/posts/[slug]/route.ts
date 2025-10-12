@@ -15,9 +15,10 @@ function isErrorWithCode(error: unknown): error is { code: string } {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
-  const slug = params.slug;
+  const { slug } = context.params;
 
   try {
     if (!AppDataSource.isInitialized) {
