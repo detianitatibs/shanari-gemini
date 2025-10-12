@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { AppDataSource } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
@@ -21,7 +21,7 @@ export async function GET() {
 
     // クエリ結果をネストした構造に変換
     const result = archives.reduce((acc, { year, month, count }) => {
-      const yearEntry = acc.find(e => e.year === year);
+      const yearEntry = acc.find((e: { year: string; }) => e.year === year);
       if (yearEntry) {
         yearEntry.months.push({ month, count });
       } else {

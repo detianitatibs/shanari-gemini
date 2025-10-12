@@ -2,6 +2,9 @@
  * @jest-environment node
  */
 
+import { createRequest } from 'node-mocks-http';
+import { NextRequest } from 'next/server';
+
 // Mock setup
 const mockGetRawMany = jest.fn();
 const mockQueryBuilder = {
@@ -38,6 +41,14 @@ beforeEach(() => {
 });
 
 describe('GET /api/archives', () => {
+  const createMockRequest = (url: string) => {
+    const req = createRequest({
+      method: 'GET',
+      url,
+    });
+    return req as unknown as NextRequest;
+  };
+
   it('should return a nested list of archives', async () => {
     const { GET } = await import('@/app/api/archives/route');
     const mockArchives = [
@@ -47,7 +58,8 @@ describe('GET /api/archives', () => {
     ];
     mockGetRawMany.mockResolvedValue(mockArchives);
 
-    const response = await GET();
+    const req = createMockRequest('/api/archives');
+    const response = await GET(req);
     const data = await response.json();
 
     const expected = [
@@ -78,7 +90,8 @@ describe('GET /api/archives', () => {
     const { GET } = await import('@/app/api/archives/route');
     mockGetRawMany.mockRejectedValue(new Error('DB error'));
 
-    const response = await GET();
+    const req = createMockRequest('/api/archives');
+    const response = await GET(req);
     const data = await response.json();
 
     expect(response.status).toBe(500);

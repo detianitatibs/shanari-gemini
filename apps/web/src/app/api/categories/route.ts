@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { AppDataSource } from '@/lib/db/data-source';
 import { Category } from '@/lib/db/entity/Category';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();

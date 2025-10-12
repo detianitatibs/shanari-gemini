@@ -43,7 +43,7 @@ describe('GET /api/categories', () => {
     mockFind.mockResolvedValue(mockCategories);
 
     const req = createMockRequest('/api/categories');
-    const response = await GET();
+    const response = await GET(req);
     const data = await response.json();
 
     expect(response.status).toBe(200);
@@ -56,7 +56,7 @@ describe('GET /api/categories', () => {
     mockFind.mockRejectedValue(new Error('DB error'));
 
     const req = createMockRequest('/api/categories');
-    const response = await GET();
+    const response = await GET(req);
     const data = await response.json();
 
     expect(response.status).toBe(500);
