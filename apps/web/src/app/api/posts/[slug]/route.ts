@@ -15,9 +15,9 @@ function isErrorWithCode(error: unknown): error is { code: string } {
 
 export async function GET(
   request: NextRequest,
-  context: { params: { [key: string]: string } }
+  { params }: { params: { slug: string } }
 ) {
-  const { slug } = context.params;
+  const slug = params.slug;
 
   try {
     if (!AppDataSource.isInitialized) {
