@@ -88,8 +88,8 @@ describe('GET /api/posts/:slug', () => {
     const mockPost = { id: 1, slug: 'test-post', filePath: 'non-existent-file.md' };
     mockFindOne.mockResolvedValue(mockPost);
 
-    const fileNotFoundError = new Error('File not found');
-    (fileNotFoundError as any).code = 'ENOENT';
+    const fileNotFoundError: Error & { code?: string } = new Error('File not found');
+    fileNotFoundError.code = 'ENOENT';
     mockReadFile.mockRejectedValue(fileNotFoundError);
 
     const req = createMockRequest('test-post');
