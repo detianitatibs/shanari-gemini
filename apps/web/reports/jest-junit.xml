@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="0.693">
+  <testsuite name="Home" errors="0" failures="0" skipped="0" timestamp="2025-10-12T12:26:42" time="0.243" tests="1">
+    <testcase classname="Home renders a heading" name="Home renders a heading" time="0.014">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-12T12:26:42" time="0.217" tests="3">
+    <testcase classname="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" name="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" time="0.133">
+    </testcase>
+    <testcase classname="GET /api/posts カテゴリのパラメータが正しく適用されること" name="GET /api/posts カテゴリのパラメータが正しく適用されること" time="0.021">
+    </testcase>
+    <testcase classname="GET /api/posts 年月のパラメータが正しく適用されること" name="GET /api/posts 年月のパラメータが正しく適用されること" time="0.023">
+    </testcase>
+  </testsuite>
+</testsuites>
