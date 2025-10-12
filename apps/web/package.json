@@ -7,12 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "typeorm": "typeorm-ts-node-commonjs -d ./src/lib/db/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate ./src/lib/db/migration/InitialSetup",
+    "migration:run": "npm run typeorm -- migration:run"
   },
   "dependencies": {
     "next": "15.5.4",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.27"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -28,6 +34,7 @@
     "jest-environment-jsdom": "^30.2.0",
     "jest-junit": "^16.0.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
