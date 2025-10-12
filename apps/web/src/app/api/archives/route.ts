@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { AppDataSource } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
