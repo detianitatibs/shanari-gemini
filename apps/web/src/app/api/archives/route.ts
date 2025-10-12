@@ -28,7 +28,7 @@ export async function GET(_request: NextRequest) {
         acc.push({ year, months: [{ month, count }] });
       }
       return acc;
-    }, [] as { year: string; months: { month: string; count: number }[] });
+    }, [] as { year: string; months: { month: string; count: number }[] }[]);
 
     return NextResponse.json(result);
   } catch (error) {
