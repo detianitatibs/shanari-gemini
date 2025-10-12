@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="8" failures="0" errors="0" time="0.763">
-  <testsuite name="GET /api/categories" errors="0" failures="0" skipped="0" timestamp="2025-10-12T13:29:35" time="0.177" tests="2">
-    <testcase classname="GET /api/categories should return a list of categories sorted by name" name="GET /api/categories should return a list of categories sorted by name" time="0.078">
+<testsuites name="jest tests" tests="3" failures="0" errors="0" time="0.215">
+  <testsuite name="GET /api/posts/:slug" errors="0" failures="0" skipped="0" timestamp="2025-10-12T13:45:39" time="0.201" tests="3">
+    <testcase classname="GET /api/posts/:slug 指定されたslugの記事が取得できること" name="GET /api/posts/:slug 指定されたslugの記事が取得できること" time="0.079">
     </testcase>
-    <testcase classname="GET /api/categories should return 500 if there is a server error" name="GET /api/categories should return 500 if there is a server error" time="0.025">
+    <testcase classname="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" name="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" time="0.022">
     </testcase>
-  </testsuite>
-  <testsuite name="GET /api/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-12T13:29:35" time="0.088" tests="3">
-    <testcase classname="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" name="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" time="0.021">
-    </testcase>
-    <testcase classname="GET /api/posts カテゴリのパラメータが正しく適用されること" name="GET /api/posts カテゴリのパラメータが正しく適用されること" time="0.02">
-    </testcase>
-    <testcase classname="GET /api/posts 年月のパラメータが正しく適用されること" name="GET /api/posts 年月のパラメータが正しく適用されること" time="0.021">
-    </testcase>
-  </testsuite>
-  <testsuite name="GET /api/archives" errors="0" failures="0" skipped="0" timestamp="2025-10-12T13:29:35" time="0.143" tests="2">
-    <testcase classname="GET /api/archives should return a nested list of archives" name="GET /api/archives should return a nested list of archives" time="0.094">
-    </testcase>
-    <testcase classname="GET /api/archives should return 500 if there is a server error" name="GET /api/archives should return 500 if there is a server error" time="0.02">
-    </testcase>
-  </testsuite>
-  <testsuite name="Home" errors="0" failures="0" skipped="0" timestamp="2025-10-12T13:29:36" time="0.104" tests="1">
-    <testcase classname="Home renders a heading" name="Home renders a heading" time="0.026">
+    <testcase classname="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" name="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" time="0.028">
     </testcase>
   </testsuite>
 </testsuites>
