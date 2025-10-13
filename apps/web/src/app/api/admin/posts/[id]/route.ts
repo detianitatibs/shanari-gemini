@@ -16,12 +16,6 @@ interface FrontMatterData {
     categories: string[];
 }
 
-interface RouteContext {
-    params: {
-        id: string;
-    };
-}
-
 // Helper function to generate Front Matter
 const generateFrontMatter = (data: FrontMatterData): string => {
     const frontMatter: { [key: string]: string | boolean | string[] } = {
@@ -57,7 +51,12 @@ const generateFrontMatter = (data: FrontMatterData): string => {
     return content;
 };
 
-export async function PUT(request: NextRequest, { params }: RouteContext) {
+export async function PUT(
+    request: NextRequest,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
+) {
+    const { params } = context;
     const session = await getSession(request);
     if (!session) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -133,7 +132,12 @@ ${body.content}`;
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: RouteContext) {
+export async function DELETE(
+    request: NextRequest,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    context: any
+) {
+    const { params } = context;
     const session = await getSession(request);
     if (!session) {
         return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

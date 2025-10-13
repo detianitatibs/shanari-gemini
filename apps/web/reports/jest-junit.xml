@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="30" failures="0" errors="0" time="1.126">
-  <testsuite name="/api/admin/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:13" time="0.331" tests="7">
+<testsuites name="jest tests" tests="30" failures="0" errors="0" time="1.167">
+  <testsuite name="/api/admin/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:01" time="0.363" tests="7">
     <testcase classname="/api/admin/posts POST should create a post and return 201" name="/api/admin/posts POST should create a post and return 201" time="0.005">
     </testcase>
     <testcase classname="/api/admin/posts POST should return 401 if not authenticated" name="/api/admin/posts POST should return 401 if not authenticated" time="0">
@@ -16,39 +16,39 @@
     <testcase classname="/api/admin/posts DELETE should return 404 if post not found for deletion" name="/api/admin/posts DELETE should return 404 if post not found for deletion" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/posts/:slug" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:13" time="0.101" tests="3">
-    <testcase classname="GET /api/posts/:slug 指定されたslugの記事が取得できること" name="GET /api/posts/:slug 指定されたslugの記事が取得できること" time="0.026">
+  <testsuite name="GET /api/posts/:slug" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.104" tests="3">
+    <testcase classname="GET /api/posts/:slug 指定されたslugの記事が取得できること" name="GET /api/posts/:slug 指定されたslugの記事が取得できること" time="0.024">
     </testcase>
-    <testcase classname="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" name="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" time="0.018">
+    <testcase classname="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" name="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" time="0.019">
     </testcase>
-    <testcase classname="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" name="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" time="0.022">
-    </testcase>
-  </testsuite>
-  <testsuite name="Home" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.094" tests="1">
-    <testcase classname="Home renders a heading" name="Home renders a heading" time="0.016">
+    <testcase classname="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" name="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" time="0.021">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.085" tests="3">
-    <testcase classname="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" name="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" time="0.02">
-    </testcase>
-    <testcase classname="GET /api/posts カテゴリのパラメータが正しく適用されること" name="GET /api/posts カテゴリのパラメータが正しく適用されること" time="0.022">
-    </testcase>
-    <testcase classname="GET /api/posts 年月のパラメータが正しく適用されること" name="GET /api/posts 年月のパラメータが正しく適用されること" time="0.018">
+  <testsuite name="Home" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.096" tests="1">
+    <testcase classname="Home renders a heading" name="Home renders a heading" time="0.015">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/categories" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.066" tests="2">
-    <testcase classname="GET /api/categories should return a list of categories sorted by name" name="GET /api/categories should return a list of categories sorted by name" time="0.018">
+  <testsuite name="GET /api/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.089" tests="3">
+    <testcase classname="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" name="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" time="0.021">
     </testcase>
-    <testcase classname="GET /api/categories should return 500 if there is a server error" name="GET /api/categories should return 500 if there is a server error" time="0.023">
+    <testcase classname="GET /api/posts カテゴリのパラメータが正しく適用されること" name="GET /api/posts カテゴリのパラメータが正しく適用されること" time="0.023">
+    </testcase>
+    <testcase classname="GET /api/posts 年月のパラメータが正しく適用されること" name="GET /api/posts 年月のパラメータが正しく適用されること" time="0.019">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/archives" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.064" tests="2">
-    <testcase classname="GET /api/archives should return a nested list of archives" name="GET /api/archives should return a nested list of archives" time="0.021">
+  <testsuite name="GET /api/categories" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.067" tests="2">
+    <testcase classname="GET /api/categories should return a list of categories sorted by name" name="GET /api/categories should return a list of categories sorted by name" time="0.019">
+    </testcase>
+    <testcase classname="GET /api/categories should return 500 if there is a server error" name="GET /api/categories should return 500 if there is a server error" time="0.022">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/archives" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.063" tests="2">
+    <testcase classname="GET /api/archives should return a nested list of archives" name="GET /api/archives should return a nested list of archives" time="0.02">
     </testcase>
     <testcase classname="GET /api/archives should return 500 if there is a server error" name="GET /api/archives should return 500 if there is a server error" time="0.018">
     </testcase>
   </testsuite>
-  <testsuite name="POST /api/auth/login" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.036" tests="5">
+  <testsuite name="POST /api/auth/login" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:02" time="0.036" tests="5">
     <testcase classname="POST /api/auth/login in development environment should return a mock session cookie" name="POST /api/auth/login in development environment should return a mock session cookie" time="0.001">
     </testcase>
     <testcase classname="POST /api/auth/login in production environment should create a session cookie for an authorized admin user" name="POST /api/auth/login in production environment should create a session cookie for an authorized admin user" time="0.001">
@@ -60,24 +60,24 @@
     <testcase classname="POST /api/auth/login in production environment should return 500 if token verification fails" name="POST /api/auth/login in production environment should return 500 if token verification fails" time="0.003">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/auth/session" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.029" tests="2">
-    <testcase classname="GET /api/auth/session should return 401 if getSession returns null" name="GET /api/auth/session should return 401 if getSession returns null" time="0">
+  <testsuite name="GET /api/auth/session" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:03" time="0.028" tests="2">
+    <testcase classname="GET /api/auth/session should return 401 if getSession returns null" name="GET /api/auth/session should return 401 if getSession returns null" time="0.001">
     </testcase>
-    <testcase classname="GET /api/auth/session should return 200 and user data if getSession returns a user" name="GET /api/auth/session should return 200 and user data if getSession returns a user" time="0.001">
+    <testcase classname="GET /api/auth/session should return 200 and user data if getSession returns a user" name="GET /api/auth/session should return 200 and user data if getSession returns a user" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="Middleware" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.028" tests="4">
+  <testsuite name="Middleware" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:03" time="0.027" tests="4">
     <testcase classname="Middleware in development environment should call next() for any admin path" name="Middleware in development environment should call next() for any admin path" time="0.001">
     </testcase>
     <testcase classname="Middleware in production environment should redirect to /login if accessing /admin without a session cookie" name="Middleware in production environment should redirect to /login if accessing /admin without a session cookie" time="0">
     </testcase>
     <testcase classname="Middleware in production environment should call next() if accessing /admin with a session cookie" name="Middleware in production environment should call next() if accessing /admin with a session cookie" time="0">
     </testcase>
-    <testcase classname="Middleware in production environment should not interfere with non-admin paths" name="Middleware in production environment should not interfere with non-admin paths" time="0">
+    <testcase classname="Middleware in production environment should not interfere with non-admin paths" name="Middleware in production environment should not interfere with non-admin paths" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="POST /api/auth/logout" errors="0" failures="0" skipped="0" timestamp="2025-10-13T12:46:14" time="0.027" tests="1">
-    <testcase classname="POST /api/auth/logout should return a success status and clear the session cookie" name="POST /api/auth/logout should return a success status and clear the session cookie" time="0">
+  <testsuite name="POST /api/auth/logout" errors="0" failures="0" skipped="0" timestamp="2025-10-13T14:14:03" time="0.026" tests="1">
+    <testcase classname="POST /api/auth/logout should return a success status and clear the session cookie" name="POST /api/auth/logout should return a success status and clear the session cookie" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>
