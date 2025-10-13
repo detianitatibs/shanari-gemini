@@ -7,9 +7,18 @@ import * as fs from 'fs/promises';
 import path from 'path';
 import { In, Like } from 'typeorm';
 
+interface FrontMatterData {
+    title: string;
+    description?: string;
+    published_at?: string;
+    slug: string;
+    status: 'published' | 'draft';
+    categories: string[];
+}
+
 // Helper function to generate Front Matter
-const generateFrontMatter = (data: any): string => {
-  const frontMatter: { [key: string]: any } = {
+const generateFrontMatter = (data: FrontMatterData): string => {
+  const frontMatter: { [key: string]: string | boolean | string[] } = {
     title: data.title,
     description: data.description || '',
     date: data.published_at ? new Date(data.published_at).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
@@ -29,7 +38,7 @@ const generateFrontMatter = (data: any): string => {
     if (Array.isArray(frontMatter[key])) {
       content += `${key}:
 `;
-      frontMatter[key].forEach((item: string) => {
+      (frontMatter[key] as string[]).forEach((item: string) => {
         content += `  - ${item}
 `;
       });
@@ -111,9 +120,8 @@ export async function POST(request: NextRequest) {
     const savedPost = await queryRunner.manager.save(newPost);
 
     // 4. Create and write markdown file
-    let frontMatterContent = generateFrontMatter({ ...body, slug });
-    frontMatterContent = frontMatterContent.replace('slug: ""', `slug: "${slug}"`);
-    const markdownContent = `${frontMatterContent}
+    const frontMatterContent = generateFrontMatter({ ...body, slug });
+    const markdownContent = `${frontMatterContent.replace('slug: ""', `slug: "${slug}"`)}
 ${body.content}`;
     await fs.writeFile(filePath, markdownContent);
 

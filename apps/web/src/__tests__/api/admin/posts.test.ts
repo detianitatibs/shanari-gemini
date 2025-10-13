@@ -1,4 +1,3 @@
-
 /**
  * @jest-environment node
  */
@@ -10,7 +9,6 @@ jest.mock('fs/promises', () => ({
     unlink: jest.fn().mockResolvedValue(undefined),
 }));
 
-import { createRequest } from 'node-mocks-http';
 import { NextRequest } from 'next/server';
 import { POST as adminPost } from '@/app/api/admin/posts/route';
 import { PUT, DELETE } from '@/app/api/admin/posts/[id]/route';
@@ -19,13 +17,13 @@ import * as fs from 'fs/promises';
 // Mocks
 const mockAdminUser = { id: 1, name: 'Admin User', email: 'admin@example.com' };
 
-const mockSave = jest.fn(entity => {
+const mockSave = jest.fn((entity: Record<string, unknown> | Array<Record<string, unknown>>) => {
   if (Array.isArray(entity)) {
     return Promise.resolve(entity.map(e => ({ ...e, id: e.id || Date.now() })));
   }
-  return Promise.resolve({ ...entity, id: entity.id || Date.now() });
+  return Promise.resolve({ ...entity, id: (entity as { id?: number }).id || Date.now() });
 });
-const mockRemove = jest.fn(entity => Promise.resolve(entity));
+const mockRemove = jest.fn((entity: Record<string, unknown>) => Promise.resolve(entity));
 const mockFindOne = jest.fn();
 const mockFind = jest.fn();
 const mockCount = jest.fn();
@@ -75,7 +73,7 @@ beforeEach(() => {
   (getSession as jest.Mock).mockResolvedValue(mockAdminUser);
 });
 
-const createMockRequest = (method: string, body?: any, url = '/api/admin/posts') => {
+const createMockRequest = (method: string, body?: Record<string, unknown>, url = '/api/admin/posts') => {
   const fullUrl = `http://localhost${url}`;
   return new NextRequest(new Request(fullUrl, { method, body: body ? JSON.stringify(body) : null, headers: { 'Content-Type': 'application/json' } }));
 };
