@@ -43,6 +43,7 @@ const mockQueryRunner = {
     save: mockSave,
     remove: mockRemove,
     findOne: mockFindOne,
+    findOneBy: mockFindOne,
     find: mockFind,
     count: mockCount,
     getRepository: jest.fn(() => ({
@@ -88,6 +89,7 @@ describe('/api/admin/posts', () => {
     };
 
     it('should create a post and return 201', async () => {
+      mockFindOne.mockResolvedValue(mockAdminUser);
       mockCount.mockResolvedValue(0);
       mockFind.mockResolvedValue([]);
 
