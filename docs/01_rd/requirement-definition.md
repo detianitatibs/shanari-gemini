@@ -100,7 +100,7 @@ Tailwind CSSのカラーパレットを基準とする。
 #### 5.1.2. 本番環境
 - **アプリケーション実行環境:** Cloud Run
 - **コンテナレジストリ:** Artifact Registry
-- **CI/CD:** Cloud BuildがArtifact Registryへのプッシュをトリガーとし、Cloud Runへ自動デプロイを行う。
+- **CI/CD:** GitHub ActionsがmainブランチへのマージをトリガーにコンテナイメージをビルドしてArtifact Registryにプッシュし、Cloud Runへ自動デプロイを行う。
 - **データベース:** SQLite3。Cloud Storage FUSEを利用して、Cloud Storage上のデータベースファイルをコンテナにマウントして利用する。
 - **ファイルストレージ:** Cloud Storage
 
@@ -129,7 +129,7 @@ Tailwind CSSのカラーパレットを基準とする。
   - テストカバレッジ (Line, Statement, Branch, Function) を計測し、結果をレポートする。
 - **CD (継続的デリバリー):**
   - mainブランチへのマージをトリガーに実行。
-  - Next.jsアプリケーションをコンテナイメージとしてビルドし、Artifact Registryにプッシュする。
+  - Next.jsアプリケーションをコンテナイメージとしてビルドしてArtifact Registryにプッシュし、Cloud Runへデプロイする。
 - **ドキュメント:**
   - `README.md`に開発環境のセットアップ手順を記載。
   - `README.md`にGitHub ActionsからGoogle Cloudへ認証するための設定手順を記載。
