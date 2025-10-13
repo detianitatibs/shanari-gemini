@@ -319,3 +319,36 @@ export default MarkdownRenderer;
 
 // ...テストコード本体
 ```
+
+## 6. 開発上の規約と既知の問題 (Development Conventions and Known Issues)
+
+### 6.1. 動的APIルートの引数の型定義 (Argument Typing for Dynamic API Routes)
+
+**問題:**
+Next.jsのApp Routerで動的APIルート（例: `app/api/posts/[slug]/route.ts`）を作成する際、`npm run build`時にTypeScriptの型エラーが発生することがあります。これは、ルートハンドラ関数の第二引数（`context`）の型がNext.jsの期待する型と一致しないために起こります。
+
+**解決策:**
+このプロジェクトでは、この問題を回避するため、暫定的に以下の規約を採用します。
+
+1.  対象となる関数の第二引数の型を `any` に設定します。
+2.  該当行の上に `// eslint-disable-next-line @typescript-eslint/no-explicit-any` コメントを追加し、Linterエラーを抑制します。
+
+**コード例:**
+```typescript
+// app/api/posts/[slug]/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(
+  request: NextRequest,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
+) {
+  // contextからパラメータを取得
+  const { slug } = context.params;
+
+  // ...以降の処理
+}
+```
+
+この規約に従うことで、ローカルでのテストとCI/CDパイプラインでのビルドを正常に通過させることができます。
