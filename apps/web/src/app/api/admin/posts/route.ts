@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { AppDataSource } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 import { Category } from '@/lib/db/entity/Category';
+import { AdminUser } from '@/lib/db/entity/AdminUser';
 import { getSession } from '@/lib/auth/session';
 import * as fs from 'fs/promises';
 import path from 'path';
@@ -72,6 +73,12 @@ export async function POST(request: NextRequest) {
   await queryRunner.startTransaction();
 
   try {
+    // 0. Find Author
+    const author = await queryRunner.manager.findOneBy(AdminUser, { id: session.id });
+    if (!author) {
+      return NextResponse.json({ message: 'Unauthorized: Admin user not found' }, { status: 401 });
+    }
+
     // 1. Generate Slug
     const date = new Date();
     const year = date.getFullYear();
@@ -108,7 +115,7 @@ export async function POST(request: NextRequest) {
     newPost.slug = slug;
     newPost.status = body.status;
     newPost.publishedAt = body.status === 'published' ? (body.published_at ? new Date(body.published_at) : new Date()) : null;
-    newPost.authorId = session.id;
+    newPost.author = author;
     newPost.categories = allCategories;
     
     // File path generation
