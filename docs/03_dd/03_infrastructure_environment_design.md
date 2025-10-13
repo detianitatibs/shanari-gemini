@@ -199,7 +199,7 @@ on:
       - '.github/workflows/cd.yml'
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
@@ -222,19 +222,34 @@ jobs:
         run: gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
 
       - name: Build and push container image
+        id: build-push
         working-directory: ./apps/web
         run: |
           IMAGE_ID=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shanari-gemini/app
           docker build -t $IMAGE_ID:${{ github.sha }} -t $IMAGE_ID:latest .
           docker push $IMAGE_ID:${{ github.sha }}
           docker push $IMAGE_ID:latest
+          echo "IMAGE_URL=$IMAGE_ID:${{ github.sha }}" >> $GITHUB_OUTPUT
+
+      # - name: Deploy to Cloud Run
+      #   # This step is commented out until Infra-001 is complete and the Cloud Run service exists.
+      #   run: |
+      #     gcloud run deploy shanari-gemini-app \
+      #       --image ${{ steps.build-push.outputs.IMAGE_URL }} \
+      #       --region ${{ secrets.GCP_REGION }} \
+      #       --platform managed \
+      #       --allow-unauthenticated \
+      #       --set-env-vars="GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},ADMIN_EMAIL_LIST=${{ secrets.ADMIN_EMAIL_LIST }}"
 ```
 
 **必要なGitHub Secrets:**
 - `GCP_PROJECT_ID`: Google CloudプロジェクトID
 - `GCP_REGION`: Cloud Runをデプロイするリージョン (例: `asia-northeast1`)
 - `GCP_WORKLOAD_IDENTITY_PROVIDER`: Workload Identity連携用のプロバイダー名
-- `GCP_SERVICE_ACCOUNT`: GitHub ActionsからGCPへの認証に使用するサービスアカウントのメールアドレス。このサービスアカウントには`Artifact Registry Writer`のロールが必要です。
+- `GCP_SERVICE_ACCOUNT`: GitHub ActionsからGCPへの認証に使用するサービスアカウントのメールアドレス。このサービスアカウントには以下のロールが必要です:
+    - `Artifact Registry Writer` (イメージのプッシュ)
+    - `Cloud Run Admin` (サービスのデプロイ)
+    - `IAM Service Account User` (Cloud Runサービスにサービスアカウントを割り当てるため)
 - `GCS_BUCKET_NAME`: SQLiteファイルや画像を保存するGCSバケット名
 - `ADMIN_EMAIL_LIST`: 管理者として許可するGoogleアカウントのメールアドレスリスト
 
