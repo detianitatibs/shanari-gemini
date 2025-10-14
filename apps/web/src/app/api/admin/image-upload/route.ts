@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { verifyAdmin } from '@/lib/auth/session';
+import { getSession } from '@/lib/auth/session';
 import { randomBytes } from 'crypto';
 import { format } from 'date-fns';
 
 export async function POST(request: NextRequest) {
-  // In development, auth is mocked, so this check is skipped.
-  if (process.env.NODE_ENV === 'production') {
-    const unauthorizedResponse = await verifyAdmin(request);
-    if (unauthorizedResponse) {
-      return unauthorizedResponse;
-    }
+  const session = await getSession(request);
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   const formData = await request.formData();

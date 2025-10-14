@@ -22,8 +22,9 @@ export async function GET(
   try {
     const fileBuffer = await fs.readFile(imagePath);
     const mimeType = lookup(imagePath) || 'application/octet-stream';
+    const uint8Array = new Uint8Array(fileBuffer);
 
-    return new NextResponse(fileBuffer, {
+    return new NextResponse(uint8Array, {
       status: 200,
       headers: {
         'Content-Type': mimeType,

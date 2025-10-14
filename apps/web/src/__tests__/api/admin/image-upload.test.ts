@@ -20,7 +20,7 @@ describe('Image Upload and Serving API', () => {
         const yearDir = path.dirname(dir);
         await fs.rmdir(dir).catch(() => {});
         await fs.rmdir(yearDir).catch(() => {});
-      } catch (error) {
+      } catch {
         // Ignore errors if files don't exist
       }
     }
