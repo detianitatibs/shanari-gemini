@@ -7,6 +7,10 @@ import { NextRequest } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+jest.mock('@/lib/auth/session', () => ({
+  getSession: jest.fn().mockResolvedValue({ id: 1, name: 'Test User', email: 'test@example.com' }),
+}));
+
 describe('Image Upload and Serving API', () => {
   const uploadedImagePaths: string[] = [];
 
