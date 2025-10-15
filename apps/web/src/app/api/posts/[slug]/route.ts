@@ -36,8 +36,8 @@ export async function GET(
     }
 
     // GCSの代わりにローカルファイルシステムからMarkdownファイルを取得
-    // プロジェクトルートからの相対パスとして解決する
-    const filePath = path.join(process.cwd(), post.filePath);
+    // `data`ディレクトリを起点とした相対パスとして解決する
+    const filePath = path.join(process.cwd(), 'data', post.filePath);
     const content = await fs.readFile(filePath, 'utf-8');
 
     const response = {
