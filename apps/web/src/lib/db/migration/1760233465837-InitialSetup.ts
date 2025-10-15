@@ -14,9 +14,11 @@ export class InitialSetup1760233465837 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "temporary_posts"("id", "title", "slug", "file_path", "status", "published_at", "created_at", "updated_at", "author_id") SELECT "id", "title", "slug", "file_path", "status", "published_at", "created_at", "updated_at", "author_id" FROM "posts"`);
         await queryRunner.query(`DROP TABLE "posts"`);
         await queryRunner.query(`ALTER TABLE "temporary_posts" RENAME TO "posts"`);
+        await queryRunner.query(`CREATE INDEX "idx_posts_author_id" ON "posts" ("author_id")`);
+        await queryRunner.query(`CREATE INDEX "idx_posts_status_published_at" ON "posts" ("status", "published_at")`);
         await queryRunner.query(`DROP INDEX "IDX_becbe37977577e3eeb089b69fe"`);
         await queryRunner.query(`DROP INDEX "IDX_f6e2655c798334198182db6399"`);
-        await queryRunner.query(`CREATE TABLE "temporary_post_categories" ("post_id" integer NOT NULL, "category_id" integer NOT NULL, CONSTRAINT "FK_becbe37977577e3eeb089b69fe1" FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT "FK_f6e2655c798334198182db6399b" FOREIGN KEY ("category_id") REFERENCES "categories" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION, PRIMARY KEY ("post_id", "category_id"))`);
+        await queryRunner.query(`CREATE TABLE "temporary_post_categories" ("post_id" integer NOT NULL, "category_id" integer NOT NULL, CONSTRAINT "FK_becbe37977577e3eeb089b69fe1" FOREIGN KEY ("post_id") REFERENCES "posts" ("id") ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT "FK_f6e2655c798334198182db6399b" FOREIGN KEY ("category_id") REFERENCES "categories" ("id") ON DELETE CASCADE ON UPDATE NO ACTION, PRIMARY KEY ("post_id", "category_id"))`);
         await queryRunner.query(`INSERT INTO "temporary_post_categories"("post_id", "category_id") SELECT "post_id", "category_id" FROM "post_categories"`);
         await queryRunner.query(`DROP TABLE "post_categories"`);
         await queryRunner.query(`ALTER TABLE "temporary_post_categories" RENAME TO "post_categories"`);
@@ -37,6 +39,8 @@ export class InitialSetup1760233465837 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "posts" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "title" text NOT NULL, "slug" text NOT NULL, "file_path" text NOT NULL, "status" text NOT NULL DEFAULT ('draft'), "published_at" datetime, "created_at" datetime NOT NULL DEFAULT (datetime('now')), "updated_at" datetime NOT NULL DEFAULT (datetime('now')), "author_id" integer NOT NULL, CONSTRAINT "UQ_54ddf9075260407dcfdd7248577" UNIQUE ("slug"))`);
         await queryRunner.query(`INSERT INTO "posts"("id", "title", "slug", "file_path", "status", "published_at", "created_at", "updated_at", "author_id") SELECT "id", "title", "slug", "file_path", "status", "published_at", "created_at", "updated_at", "author_id" FROM "temporary_posts"`);
         await queryRunner.query(`DROP TABLE "temporary_posts"`);
+        await queryRunner.query(`DROP INDEX "idx_posts_status_published_at"`);
+        await queryRunner.query(`DROP INDEX "idx_posts_author_id"`);
         await queryRunner.query(`DROP INDEX "IDX_f6e2655c798334198182db6399"`);
         await queryRunner.query(`DROP INDEX "IDX_becbe37977577e3eeb089b69fe"`);
         await queryRunner.query(`DROP TABLE "post_categories"`);
