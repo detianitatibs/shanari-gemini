@@ -1,29 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="10" failures="0" errors="0" time="0.463">
-  <testsuite name="Icon" errors="0" failures="0" skipped="0" timestamp="2025-10-16T13:26:45" time="0.177" tests="3">
-    <testcase classname="Icon renders the specified icon" name="Icon renders the specified icon" time="0.01">
+<testsuites name="jest tests" tests="2" failures="0" errors="0" time="0.318">
+  <testsuite name="SearchForm" errors="0" failures="0" skipped="0" timestamp="2025-10-17T15:41:24" time="0.197" tests="2">
+    <testcase classname="SearchForm calls onSearch with the query when the user presses Enter" name="SearchForm calls onSearch with the query when the user presses Enter" time="0.058">
     </testcase>
-    <testcase classname="Icon applies custom className" name="Icon applies custom className" time="0.001">
-    </testcase>
-    <testcase classname="Icon returns null for an invalid icon name" name="Icon returns null for an invalid icon name" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="Input" errors="0" failures="0" skipped="0" timestamp="2025-10-16T13:26:45" time="0.096" tests="3">
-    <testcase classname="Input renders correctly" name="Input renders correctly" time="0.003">
-    </testcase>
-    <testcase classname="Input allows user to type" name="Input allows user to type" time="0.046">
-    </testcase>
-    <testcase classname="Input is disabled when the disabled prop is true" name="Input is disabled when the disabled prop is true" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="Button" errors="0" failures="0" skipped="0" timestamp="2025-10-16T13:26:45" time="0.061" tests="4">
-    <testcase classname="Button PrimaryButton renders correctly" name="Button PrimaryButton renders correctly" time="0.006">
-    </testcase>
-    <testcase classname="Button SecondaryButton renders correctly" name="Button SecondaryButton renders correctly" time="0.002">
-    </testcase>
-    <testcase classname="Button handles onClick event" name="Button handles onClick event" time="0.009">
-    </testcase>
-    <testcase classname="Button is disabled when the disabled prop is true" name="Button is disabled when the disabled prop is true" time="0.002">
+    <testcase classname="SearchForm updates the input value as the user types" name="SearchForm updates the input value as the user types" time="0.02">
     </testcase>
   </testsuite>
 </testsuites>
