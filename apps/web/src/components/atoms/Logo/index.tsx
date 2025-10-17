@@ -10,7 +10,7 @@ const Logo: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...props }) 
       className={`${defaultClass} ${className}`}
       {...props}
     >
-      <path d="m577.3 0 577.4 1000H0z" fill="#000"/>
+      <path d="m577.3 0 577.4 1000H0z" fill="currentColor"/>
     </svg>
   );
 };
