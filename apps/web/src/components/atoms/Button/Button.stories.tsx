@@ -1,5 +1,5 @@
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import Button, { PrimaryButton, SecondaryButton } from './index';
 
 const meta: Meta<typeof Button> = {

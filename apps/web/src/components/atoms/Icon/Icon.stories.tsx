@@ -1,5 +1,5 @@
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import Icon, { IconName } from './index';
 import * as HIcons from '@heroicons/react/24/outline';
 
