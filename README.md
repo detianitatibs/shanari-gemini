@@ -44,6 +44,18 @@ npm run test
 npm test -- src/__tests__/api/posts.test.ts
 ```
 
+## Storybook
+
+コンポーネントライブラリを視覚的に確認・テストするためにStorybookを使用します。
+
+`apps/web`ディレクトリ内で以下のコマンドを実行してください。
+
+```bash
+npm run storybook
+```
+
+実行後、自動的にブラウザで [http://localhost:6006](http://localhost:6006) が開き、Storybookの画面が表示されます。
+
 ## CI/CD パイプライン
 
 このプロジェクトでは、GitHub Actionsを使用してCI/CDパイプラインを構築しています。
