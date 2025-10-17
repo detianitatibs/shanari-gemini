@@ -27,7 +27,7 @@ const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
         className="pl-10"
       />
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <Icon name="SearchIcon" className="h-5 w-5 text-zinc-400" />
+        <Icon name="MagnifyingGlassIcon" className="h-5 w-5 text-zinc-400" />
       </div>
     </form>
   );
