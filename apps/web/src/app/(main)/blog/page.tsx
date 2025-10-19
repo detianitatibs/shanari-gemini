@@ -4,12 +4,8 @@ import PostList from '@/components/organisms/PostList';
 import Sidebar from '@/components/organisms/Sidebar';
 import SortDropdown from '@/components/molecules/SortDropdown';
 
-type PageProps = {
-  params: Record<string, never>;
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-const BlogPage = async ({ searchParams }: PageProps) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BlogPage = async ({ searchParams }: { searchParams: any }) => {
   // searchParamsからクエリ文字列を安全に構築
   const postQuery = new URLSearchParams();
   if (searchParams.category) postQuery.set('category', String(searchParams.category));
