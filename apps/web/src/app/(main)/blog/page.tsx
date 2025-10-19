@@ -4,11 +4,12 @@ import PostList from '@/components/organisms/PostList';
 import Sidebar from '@/components/organisms/Sidebar';
 import SortDropdown from '@/components/molecules/SortDropdown';
 
-const BlogPage = async ({
-  searchParams,
-}: {
+type PageProps = {
+  params: { [key: string]: string };
   searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+};
+
+const BlogPage = async ({ searchParams }: PageProps) => {
   // searchParamsからクエリ文字列を安全に構築
   const postQuery = new URLSearchParams();
   if (searchParams.category) postQuery.set('category', String(searchParams.category));
@@ -17,9 +18,9 @@ const BlogPage = async ({
   if (searchParams.page) postQuery.set('page', String(searchParams.page));
 
   // データ取得を並列化
-  const postsPromise = fetch(`http://localhost:3000/api/posts?${postQuery.toString()}`).then(res => res.json());
-  const categoriesPromise = fetch(`http://localhost:3000/api/categories`).then(res => res.json());
-  const archivesPromise = fetch(`http://localhost:3000/api/archives`).then(res => res.json());
+  const postsPromise = fetch(`/api/posts?${postQuery.toString()}`).then(res => res.json());
+  const categoriesPromise = fetch(`/api/categories`).then(res => res.json());
+  const archivesPromise = fetch(`/api/archives`).then(res => res.json());
 
   const [postsData, categoriesData, archivesData] = await Promise.all([
     postsPromise,
