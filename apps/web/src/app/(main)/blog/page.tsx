@@ -5,6 +5,7 @@ import Sidebar from '@/components/organisms/Sidebar';
 import SortDropdown from '@/components/molecules/SortDropdown';
 
 type PageProps = {
+  params: Record<string, never>;
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
