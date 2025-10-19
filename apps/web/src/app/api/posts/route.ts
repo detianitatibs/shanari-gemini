@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AppDataSource } from '@/lib/db/data-source';
+import { getDbConnection } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 import { FindManyOptions, FindOptionsWhere, Between } from 'typeorm';
 
@@ -13,10 +13,8 @@ export async function GET(request: NextRequest) {
   const month = searchParams.get('month');
 
   try {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-    const postRepository = AppDataSource.getRepository(Post);
+    const connection = await getDbConnection();
+    const postRepository = connection.getRepository(Post);
 
     const where: FindOptionsWhere<Post> = {
       status: 'published',

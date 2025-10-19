@@ -1,25 +1,34 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+import { Post } from './entity/Post';
+import { Category } from './entity/Category';
+import { AdminUser } from './entity/AdminUser';
+import { InitialSetup1760233465837 } from './migration/1760233465837-InitialSetup';
 
-/**
- * データベースへのパスを環境変数から取得します。
- *
- * - `DATABASE_PATH` 環境変数が設定されている場合、その値を使用します。
- *   これは本番環境（Cloud Run）で、Cloud Storage FUSE によってマウントされた
- *   データベースファイルのパスを指定するために使用されます。
- *   (例: /mnt/gcs/prod.db)
- *
- * - 環境変数が設定されていない場合は、開発環境用のデフォルトパス 'data/dev.db' を使用します。
- *   このパスは docker-compose.yaml でマウントされたローカルファイルに対応します。
- */
 const databasePath = process.env.DATABASE_PATH || 'data/dev.db';
 
-export const AppDataSource = new DataSource({
+const AppDataSource = new DataSource({
   type: 'sqlite',
   database: databasePath,
-  synchronize: false, // スキーマの同期はマイグレーションで行うためfalse
-  logging: process.env.NODE_ENV === 'development', // 開発環境でのみSQLログを出力
-  entities: ['src/lib/db/entity/**/*.ts'], // エンティティのパス
-  migrations: ['src/lib/db/migration/**/*.ts'], // マイグレーションファイルのパス
+  synchronize: false,
+  logging: process.env.NODE_ENV === 'development',
+  entities: [Post, Category, AdminUser],
+  migrations: [InitialSetup1760233465837],
   subscribers: [],
 });
+
+let connection: DataSource | null = null;
+
+/**
+ * データベース接続を管理し、シングルトンパターンで接続を再利用します。
+ */
+export const getDbConnection = async () => {
+  if (connection && connection.isInitialized) {
+    return connection;
+  }
+
+  if (!AppDataSource.isInitialized) {
+    connection = await AppDataSource.initialize();
+  }
+  return connection as DataSource;
+};

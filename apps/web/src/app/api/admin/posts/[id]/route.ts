@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AppDataSource } from '@/lib/db/data-source';
+import { getDbConnection } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 import { Category } from '@/lib/db/entity/Category';
 import { getSession } from '@/lib/auth/session';
@@ -68,14 +68,8 @@ export async function PUT(
     }
 
     const body = await request.json();
-    if (!body.title || !body.content || !body.status || !body.categories || body.categories.length === 0) {
-        return NextResponse.json({ message: 'Bad Request: Missing required fields.' }, { status: 400 });
-    }
-
-    if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize();
-    }
-    const queryRunner = AppDataSource.createQueryRunner();
+const connection = await getDbConnection();
+    const queryRunner = connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
@@ -103,7 +97,7 @@ export async function PUT(
         });
 
         const savedNewCategories = await queryRunner.manager.save(newCategories);
-        const allCategories = [...categoryEntities, ...savedNewCategories];
+        const allCategories = [...categoryEntities, ...(Array.isArray(savedNewCategories) ? savedNewCategories : [savedNewCategories])];
 
         // Update Post
         post.title = body.title;
@@ -148,10 +142,8 @@ export async function DELETE(
         return NextResponse.json({ message: 'Invalid post ID' }, { status: 400 });
     }
 
-    if (!AppDataSource.isInitialized) {
-        await AppDataSource.initialize();
-    }
-    const queryRunner = AppDataSource.createQueryRunner();
+    const connection = await getDbConnection();
+    const queryRunner = connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 

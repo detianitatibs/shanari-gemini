@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AppDataSource } from '@/lib/db/data-source';
+import { getDbConnection } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -21,10 +21,8 @@ export async function GET(
   const { slug } = context.params;
 
   try {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-    const postRepository = AppDataSource.getRepository(Post);
+    const connection = await getDbConnection();
+    const postRepository = connection.getRepository(Post);
 
     const post = await postRepository.findOne({
       where: { slug, status: 'published' },

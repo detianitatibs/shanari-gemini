@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AppDataSource } from '@/lib/db/data-source';
+import { getDbConnection } from '@/lib/db/data-source';
 import { Post } from '@/lib/db/entity/Post';
 import { Category } from '@/lib/db/entity/Category';
 import { AdminUser } from '@/lib/db/entity/AdminUser';
@@ -65,10 +65,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'Bad Request: Missing required fields.' }, { status: 400 });
   }
 
-  if (!AppDataSource.isInitialized) {
-    await AppDataSource.initialize();
-  }
-  const queryRunner = AppDataSource.createQueryRunner();
+  const connection = await getDbConnection();
+  const queryRunner = connection.createQueryRunner();
   await queryRunner.connect();
   await queryRunner.startTransaction();
 
@@ -107,7 +105,7 @@ export async function POST(request: NextRequest) {
     });
 
     const savedNewCategories = await queryRunner.manager.save(newCategories);
-    const allCategories = [...categoryEntities, ...savedNewCategories];
+    const allCategories = [...categoryEntities, ...(Array.isArray(savedNewCategories) ? savedNewCategories : [savedNewCategories])];
 
     // 3. Create and Save Post
     const newPost = new Post();
