@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AppDataSource } from '@/lib/db/data-source';
+import { getDbConnection } from '@/lib/db/data-source';
 import { Category } from '@/lib/db/entity/Category';
 
 export async function GET(_request: NextRequest) {
   try {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-    const categoryRepository = AppDataSource.getRepository(Category);
+    const connection = await getDbConnection();
+    const categoryRepository = connection.getRepository(Category);
 
     const categories = await categoryRepository.find({
       order: { name: 'ASC' },

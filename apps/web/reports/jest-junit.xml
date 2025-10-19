@@ -1,9 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="2" failures="0" errors="0" time="0.318">
-  <testsuite name="SearchForm" errors="0" failures="0" skipped="0" timestamp="2025-10-17T15:41:24" time="0.197" tests="2">
-    <testcase classname="SearchForm calls onSearch with the query when the user presses Enter" name="SearchForm calls onSearch with the query when the user presses Enter" time="0.058">
+<testsuites name="jest tests" tests="51" failures="0" errors="0" time="1.381">
+  <testsuite name="/api/admin/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.175" tests="4">
+    <testcase classname="/api/admin/posts POST should create a post and return 201" name="/api/admin/posts POST should create a post and return 201" time="0.007">
+    </testcase>
+    <testcase classname="/api/admin/posts PUT should update a post and return 200" name="/api/admin/posts PUT should update a post and return 200" time="0.001">
+    </testcase>
+    <testcase classname="/api/admin/posts PUT should return 404 if post not found" name="/api/admin/posts PUT should return 404 if post not found" time="0">
+    </testcase>
+    <testcase classname="/api/admin/posts DELETE should delete a post and return 204" name="/api/admin/posts DELETE should delete a post and return 204" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Sidebar" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.142" tests="2">
+    <testcase classname="Sidebar renders categories and archives" name="Sidebar renders categories and archives" time="0.014">
+    </testcase>
+    <testcase classname="Sidebar toggles archive year visibility on click" name="Sidebar toggles archive year visibility on click" time="0.042">
+    </testcase>
+  </testsuite>
+  <testsuite name="SearchForm" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.102" tests="2">
+    <testcase classname="SearchForm calls onSearch with the query when the user presses Enter" name="SearchForm calls onSearch with the query when the user presses Enter" time="0.036">
     </testcase>
     <testcase classname="SearchForm updates the input value as the user types" name="SearchForm updates the input value as the user types" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="Image Upload and Serving API" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.063" tests="4">
+    <testcase classname="Image Upload and Serving API should reject upload if no file is provided" name="Image Upload and Serving API should reject upload if no file is provided" time="0.002">
+    </testcase>
+    <testcase classname="Image Upload and Serving API should upload an image and return its URL" name="Image Upload and Serving API should upload an image and return its URL" time="0.007">
+    </testcase>
+    <testcase classname="Image Upload and Serving API should serve the uploaded image" name="Image Upload and Serving API should serve the uploaded image" time="0.001">
+    </testcase>
+    <testcase classname="Image Upload and Serving API should return 404 for a non-existent image" name="Image Upload and Serving API should return 404 for a non-existent image" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/posts/:slug" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.065" tests="3">
+    <testcase classname="GET /api/posts/:slug 指定されたslugの記事が取得できること" name="GET /api/posts/:slug 指定されたslugの記事が取得できること" time="0.001">
+    </testcase>
+    <testcase classname="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" name="GET /api/posts/:slug 記事が見つからない場合に404を返すこと" time="0">
+    </testcase>
+    <testcase classname="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" name="GET /api/posts/:slug Markdownファイルが見つからない場合に404を返すこと" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="PostCard" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.066" tests="2">
+    <testcase classname="PostCard renders all elements correctly" name="PostCard renders all elements correctly" time="0.018">
+    </testcase>
+    <testcase classname="PostCard renders placeholder image when thumbnail_url is not provided" name="PostCard renders placeholder image when thumbnail_url is not provided" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/categories" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.06" tests="2">
+    <testcase classname="GET /api/categories should return a list of categories sorted by name" name="GET /api/categories should return a list of categories sorted by name" time="0.001">
+    </testcase>
+    <testcase classname="GET /api/categories should return 500 on database error" name="GET /api/categories should return 500 on database error" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/posts" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.053" tests="3">
+    <testcase classname="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" name="GET /api/posts デフォルトのパラメータで記事一覧を取得できること" time="0.001">
+    </testcase>
+    <testcase classname="GET /api/posts カテゴリのパラメータが正しく適用されること" name="GET /api/posts カテゴリのパラメータが正しく適用されること" time="0">
+    </testcase>
+    <testcase classname="GET /api/posts 年月のパラメータが正しく適用されること" name="GET /api/posts 年月のパラメータが正しく適用されること" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Input" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:29" time="0.068" tests="3">
+    <testcase classname="Input renders correctly" name="Input renders correctly" time="0.002">
+    </testcase>
+    <testcase classname="Input allows user to type" name="Input allows user to type" time="0.029">
+    </testcase>
+    <testcase classname="Input is disabled when the disabled prop is true" name="Input is disabled when the disabled prop is true" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Button" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.048" tests="4">
+    <testcase classname="Button PrimaryButton renders correctly" name="Button PrimaryButton renders correctly" time="0.004">
+    </testcase>
+    <testcase classname="Button SecondaryButton renders correctly" name="Button SecondaryButton renders correctly" time="0.002">
+    </testcase>
+    <testcase classname="Button handles onClick event" name="Button handles onClick event" time="0.008">
+    </testcase>
+    <testcase classname="Button is disabled when the disabled prop is true" name="Button is disabled when the disabled prop is true" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/archives" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.054" tests="2">
+    <testcase classname="GET /api/archives should return a nested list of archives" name="GET /api/archives should return a nested list of archives" time="0.001">
+    </testcase>
+    <testcase classname="GET /api/archives should return 500 on database error" name="GET /api/archives should return 500 on database error" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Icon" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.035" tests="3">
+    <testcase classname="Icon renders the specified icon" name="Icon renders the specified icon" time="0.002">
+    </testcase>
+    <testcase classname="Icon applies custom className" name="Icon applies custom className" time="0.001">
+    </testcase>
+    <testcase classname="Icon returns null for an invalid icon name" name="Icon returns null for an invalid icon name" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="CategoryLink" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.031" tests="1">
+    <testcase classname="CategoryLink renders the category name and count" name="CategoryLink renders the category name and count" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="ArchiveLink" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.036" tests="1">
+    <testcase classname="ArchiveLink renders the year, month, and count" name="ArchiveLink renders the year, month, and count" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="Home" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.032" tests="1">
+    <testcase classname="Home renders a heading" name="Home renders a heading" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="POST /api/auth/login" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.03" tests="5">
+    <testcase classname="POST /api/auth/login in development environment should return a mock session cookie" name="POST /api/auth/login in development environment should return a mock session cookie" time="0.001">
+    </testcase>
+    <testcase classname="POST /api/auth/login in production environment should create a session cookie for an authorized admin user" name="POST /api/auth/login in production environment should create a session cookie for an authorized admin user" time="0.001">
+    </testcase>
+    <testcase classname="POST /api/auth/login in production environment should return 403 for a non-admin user" name="POST /api/auth/login in production environment should return 403 for a non-admin user" time="0">
+    </testcase>
+    <testcase classname="POST /api/auth/login in production environment should return 400 if idToken is missing" name="POST /api/auth/login in production environment should return 400 if idToken is missing" time="0.001">
+    </testcase>
+    <testcase classname="POST /api/auth/login in production environment should return 500 if token verification fails" name="POST /api/auth/login in production environment should return 500 if token verification fails" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="PostList" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.028" tests="2">
+    <testcase classname="PostList renders a list of PostCards" name="PostList renders a list of PostCards" time="0.002">
+    </testcase>
+    <testcase classname="PostList renders nothing when the posts array is empty" name="PostList renders nothing when the posts array is empty" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="GET /api/auth/session" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.026" tests="2">
+    <testcase classname="GET /api/auth/session should return 401 if getSession returns null" name="GET /api/auth/session should return 401 if getSession returns null" time="0">
+    </testcase>
+    <testcase classname="GET /api/auth/session should return 200 and user data if getSession returns a user" name="GET /api/auth/session should return 200 and user data if getSession returns a user" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Middleware" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.026" tests="4">
+    <testcase classname="Middleware in development environment should call next() for any admin path" name="Middleware in development environment should call next() for any admin path" time="0.001">
+    </testcase>
+    <testcase classname="Middleware in production environment should redirect to /login if accessing /admin without a session cookie" name="Middleware in production environment should redirect to /login if accessing /admin without a session cookie" time="0">
+    </testcase>
+    <testcase classname="Middleware in production environment should call next() if accessing /admin with a session cookie" name="Middleware in production environment should call next() if accessing /admin with a session cookie" time="0">
+    </testcase>
+    <testcase classname="Middleware in production environment should not interfere with non-admin paths" name="Middleware in production environment should not interfere with non-admin paths" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="POST /api/auth/logout" errors="0" failures="0" skipped="0" timestamp="2025-10-19T10:11:30" time="0.025" tests="1">
+    <testcase classname="POST /api/auth/logout should return a success status and clear the session cookie" name="POST /api/auth/logout should return a success status and clear the session cookie" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>

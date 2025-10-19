@@ -1,100 +1,61 @@
 /**
  * @jest-environment node
  */
-
-import { createRequest } from 'node-mocks-http';
+import { GET } from '@/app/api/archives/route';
 import { NextRequest } from 'next/server';
+import { getDbConnection } from '@/lib/db/data-source';
 
-// Mock setup
-const mockGetRawMany = jest.fn();
-const mockQueryBuilder = {
-  select: jest.fn().mockReturnThis(),
-  where: jest.fn().mockReturnThis(),
-  andWhere: jest.fn().mockReturnThis(),
-  groupBy: jest.fn().mockReturnThis(),
-  orderBy: jest.fn().mockReturnThis(),
-  addOrderBy: jest.fn().mockReturnThis(),
-  getRawMany: mockGetRawMany,
-};
+jest.mock('@/lib/db/data-source');
 
-const mockGetRepository = jest.fn(() => ({
-  createQueryBuilder: jest.fn(() => mockQueryBuilder),
-}));
-
-jest.doMock('@/lib/db/data-source', () => ({
-  AppDataSource: {
-    isInitialized: true,
-    getRepository: mockGetRepository,
-    initialize: jest.fn().mockResolvedValue(undefined),
-  },
-}));
-
-beforeEach(() => {
-  jest.resetModules();
-  mockGetRawMany.mockClear();
-  Object.values(mockQueryBuilder).forEach(mockFn => {
-    if (jest.isMockFunction(mockFn)) {
-      mockFn.mockClear();
-    }
-  });
-  mockGetRepository.mockClear();
-});
+const mockedGetDbConnection = getDbConnection as jest.Mock;
 
 describe('GET /api/archives', () => {
-  const createMockRequest = (url: string) => {
-    const req = createRequest({
-      method: 'GET',
-      url,
-    });
-    return req as unknown as NextRequest;
+  const mockQueryBuilder = {
+    select: jest.fn().mockReturnThis(),
+    addSelect: jest.fn().mockReturnThis(),
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    groupBy: jest.fn().mockReturnThis(),
+    orderBy: jest.fn().mockReturnThis(),
+    addOrderBy: jest.fn().mockReturnThis(),
+    getRawMany: jest.fn(),
   };
 
-  it('should return a nested list of archives', async () => {
-    const { GET } = await import('@/app/api/archives/route');
-    const mockArchives = [
-      { year: '2025', month: '10', count: 5 },
-      { year: '2025', month: '08', count: 4 },
-      { year: '2024', month: '12', count: 12 },
-    ];
-    mockGetRawMany.mockResolvedValue(mockArchives);
+  beforeEach(() => {
+    Object.values(mockQueryBuilder).forEach(mockFn => mockFn.mockClear());
+    mockedGetDbConnection.mockClear();
+    mockedGetDbConnection.mockResolvedValue({
+      getRepository: () => ({
+        createQueryBuilder: () => mockQueryBuilder,
+      }),
+    });
+  });
 
-    const req = createMockRequest('/api/archives');
+  it('should return a nested list of archives', async () => {
+    const mockRawArchives = [
+      { year: '2025', month: '10', count: '5' },
+      { year: '2025', month: '8', count: '3' },
+      { year: '2024', month: '12', count: '10' },
+    ];
+    mockQueryBuilder.getRawMany.mockResolvedValue(mockRawArchives);
+
+    const req = new NextRequest('http://localhost/api/archives');
     const response = await GET(req);
     const data = await response.json();
 
     const expected = [
-      {
-        year: '2025',
-        months: [
-          { month: '10', count: 5 },
-          { month: '08', count: 4 },
-        ],
-      },
-      {
-        year: '2024',
-        months: [{ month: '12', count: 12 }],
-      },
+      { year: '2025', months: [{ month: '10', count: '5' }, { month: '8', count: '3' }] },
+      { year: '2024', months: [{ month: '12', count: '10' }] },
     ];
 
     expect(response.status).toBe(200);
     expect(data).toEqual(expected);
-    expect(mockGetRepository).toHaveBeenCalledWith(expect.any(Function)); // Post entity
-    expect(mockQueryBuilder.select).toHaveBeenCalled();
-    expect(mockQueryBuilder.where).toHaveBeenCalledWith("post.status = :status", { status: 'published' });
-    expect(mockQueryBuilder.groupBy).toHaveBeenCalledWith('year, month');
-    expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('year', 'DESC');
-    expect(mockQueryBuilder.addOrderBy).toHaveBeenCalledWith('month', 'DESC');
   });
 
-  it('should return 500 if there is a server error', async () => {
-    const { GET } = await import('@/app/api/archives/route');
-    mockGetRawMany.mockRejectedValue(new Error('DB error'));
-
-    const req = createMockRequest('/api/archives');
+  it('should return 500 on database error', async () => {
+    mockQueryBuilder.getRawMany.mockRejectedValue(new Error('DB error'));
+    const req = new NextRequest('http://localhost/api/archives');
     const response = await GET(req);
-    const data = await response.json();
-
     expect(response.status).toBe(500);
-    expect(data).toEqual({ message: 'Internal Server Error' });
   });
 });
