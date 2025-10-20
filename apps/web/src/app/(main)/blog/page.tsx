@@ -1,5 +1,6 @@
 
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
 import PostList from '@/components/organisms/PostList';
 import Sidebar from '@/components/organisms/Sidebar';
 import SortDropdown from '@/components/molecules/SortDropdown';
@@ -8,15 +9,23 @@ import SortDropdown from '@/components/molecules/SortDropdown';
 const BlogPage = async ({ searchParams }: { searchParams: any }) => {
   // searchParamsからクエリ文字列を安全に構築
   const postQuery = new URLSearchParams();
-  if (searchParams.category) postQuery.set('category', String(searchParams.category));
-  if (searchParams.archive) postQuery.set('archive', String(searchParams.archive));
-  if (searchParams.sort) postQuery.set('sort', String(searchParams.sort));
-  if (searchParams.page) postQuery.set('page', String(searchParams.page));
+  if (searchParams) {
+    Object.entries(searchParams).forEach(([key, value]) => {
+      if (value) {
+        postQuery.set(key, String(value));
+      }
+    });
+  }
+
+  const headersList = headers();
+  const host = headersList.get('host');
+  const protocol = host?.startsWith('localhost') ? 'http' : 'https';
+  const origin = `${protocol}://${host}`;
 
   // データ取得を並列化
-  const postsPromise = fetch(`/api/posts?${postQuery.toString()}`).then(res => res.json());
-  const categoriesPromise = fetch(`/api/categories`).then(res => res.json());
-  const archivesPromise = fetch(`/api/archives`).then(res => res.json());
+  const postsPromise = fetch(`${origin}/api/posts?${postQuery.toString()}`).then(res => res.json());
+  const categoriesPromise = fetch(`${origin}/api/categories`).then(res => res.json());
+  const archivesPromise = fetch(`${origin}/api/archives`).then(res => res.json());
 
   const [postsData, categoriesData, archivesData] = await Promise.all([
     postsPromise,
